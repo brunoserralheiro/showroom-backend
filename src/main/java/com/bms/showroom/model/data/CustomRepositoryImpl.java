@@ -51,6 +51,14 @@ public class CustomRepositoryImpl implements CustomRepository {
 		
 		return 0L;
 	}
+
+	@Override
+	public Collection saveCollection(Collection collection) {
+		
+		
+		
+		return collection;
+	}
 	
 
 	

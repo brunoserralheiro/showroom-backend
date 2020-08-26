@@ -14,6 +14,7 @@ import com.bms.showroom.model.entity.Collection;
  * @author Bruno Serralheiro
  *
  */
+
 public interface CollectionRepository extends MongoRepository<Collection, String>{
 	
 	Collection findByName(String name);
