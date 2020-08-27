@@ -3,12 +3,16 @@
  */
 package com.bms.showroom.model.data;
 
+import org.springframework.stereotype.Repository;
+
 import com.bms.showroom.model.entity.Collection;
 
 /**
  * @author HP
  *
  */
+
+
 public interface CustomRepository {
 
 	long updateCollection(String name, String description);

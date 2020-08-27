@@ -8,12 +8,13 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.bms.showroom.model.entity.Collection;
 import com.mongodb.client.result.UpdateResult;
 
 
-@Component
+@Repository
 public class CustomRepositoryImpl implements CustomRepository {
 
 	@Autowired

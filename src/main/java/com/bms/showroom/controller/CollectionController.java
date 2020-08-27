@@ -15,39 +15,36 @@ import com.bms.showroom.ShowroomBackendApplication;
 import com.bms.showroom.model.data.CollectionRepository;
 import com.bms.showroom.model.data.CustomRepository;
 import com.bms.showroom.model.entity.Collection;
+import com.bms.showroom.model.service.CollectionService;
 
 @RestController
 public class CollectionController {
 
 	@Autowired
-	private static CollectionRepository collectionRepository;
-	
-	@Autowired
-	private static CustomRepository customRepository;
+	private CollectionService service;
 	
 	
-	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(  value="api/collection/{name}", method=RequestMethod.GET)
-	public List<Collection> getCollection(@RequestParam(value="name", defaultValue = "")String name){
+	public Collection getCollection(@RequestParam(value="name", defaultValue = "")String name){
 		
-		List<Collection> collections = new ArrayList<>();
-		if(!collections.isEmpty()) {
-			return collections;
+			Collection collection  = service.findByName(name);
 		
-		}else {
-			collections.add(new Collection("one", "desc one ", true));
+			if (collection == null) return  new Collection("foo", "bar", false);
 			
-			return collections;
-		}
+			return  collection;
+					
+					
+					
+		
 	}
 	
-	@SuppressWarnings("static-access")
 	@GetMapping(value="api/collection")
 	public List<Collection> getCollectionList(){
 		
 		List<Collection> collections = new ArrayList<Collection>(); 
 				
-		collections =	collectionRepository.findAll();
+		collections =	service.findAll();
 		
 		if(!collections.isEmpty()) {
 			return collections;
