@@ -27,7 +27,7 @@ class ShowroomBackendApplicationTests {
 	void contextLoads() {
 	}
 
-	@Autowired	
+	@Autowired
 	private CollectionRepository collectionRepository;
 
 	@Autowired
@@ -44,7 +44,6 @@ class ShowroomBackendApplicationTests {
 	public void findAllContainSameItemsAsSaved() {
 
 //		given 	
-		collectionRepository.deleteAll();
 		collectionListToSave = addSampleData();
 
 //		when
@@ -64,7 +63,6 @@ class ShowroomBackendApplicationTests {
 	public void findAllHaveSameSizeAsSaved() {
 
 //		given 
-		collectionRepository.deleteAll();
 		collectionListToSave = addSampleData();
 
 //		when
@@ -81,7 +79,6 @@ class ShowroomBackendApplicationTests {
 	public void findOneContainsSameDescriptionValueAsUpdated() {
 
 //		given
-		collectionRepository.deleteAll();
 		collectionListToSave = addSampleData();
 		Collection collectionToUpdate = new Collection("col1", "new desc", true);
 
@@ -93,13 +90,12 @@ class ShowroomBackendApplicationTests {
 
 		assert (fetchedCollection.getDescription()).contains(collectionToUpdate.getDescription());
 
-	}
+	}	
 
 	@Test
 	public void updateIsSetToDeactivated() {
 
 //		given
-		collectionRepository.deleteAll();
 		collectionListToSave = addSampleData();
 		Collection collectionToUpdate = new Collection("col3", "desc3", true);
 
@@ -122,7 +118,7 @@ class ShowroomBackendApplicationTests {
 		Collection col4 = new Collection("col4", "desc4", true);
 
 		
-		
+		collectionRepository.deleteAll();
 		collectionRepository.save(col1);
 		collectionRepository.save(col2);
 		collectionRepository.save(col3);

@@ -3,7 +3,11 @@
  */
 package com.bms.showroom.model.entity;
 
+import javax.persistence.Entity;
+
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.IndexDirection;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
@@ -22,9 +26,10 @@ public class Collection {
 	
 	
 
-	@MongoId(value = FieldType.OBJECT_ID)
+//	@MongoId(value = FieldType.OBJECT_ID)
 	@Id
 	private String id;
+	@Indexed(unique=true, direction=IndexDirection.DESCENDING)
 	private String name;
 	private String description;
 	private boolean active;

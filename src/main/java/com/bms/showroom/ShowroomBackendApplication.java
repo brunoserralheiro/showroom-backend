@@ -6,11 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 import com.bms.showroom.model.data.CollectionRepository;
 import com.bms.showroom.model.data.CustomRepository;
 import com.bms.showroom.model.entity.Collection;
 
+@ComponentScan("com.bms.showroom")
 @SpringBootApplication
 public class ShowroomBackendApplication {
 
@@ -40,8 +42,8 @@ public class ShowroomBackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ShowroomBackendApplication.class, args);
-		
-		List <Collection> colls =  addSampleData();
+		System.out.println("<<<<<<<<<<<<<<<<           START   >>>>>>>>>>>>");
+//		List <Collection> colls =  addSampleData();
 		
 		
 		
@@ -59,7 +61,7 @@ public class ShowroomBackendApplication {
 	
 	
 	
-	private static List<Collection> addSampleData() {
+	public static List<Collection> addSampleData() {
 
 		System.out.println("Adding sample data");
 
@@ -69,7 +71,7 @@ public class ShowroomBackendApplication {
 		Collection col4 = new Collection("col4", "desc4", true);
 
 		
-//		collectionRepository.deleteAll();
+		collectionRepository.deleteAll();
 		collectionRepository.save(col1);
 		collectionRepository.save(col2);
 		collectionRepository.save(col3);
