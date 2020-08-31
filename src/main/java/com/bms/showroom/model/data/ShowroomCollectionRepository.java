@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.bms.showroom.model.entity.Collection;
+import com.bms.showroom.model.entity.ShowroomCollection;
 
 /**
  * @author Bruno Serralheiro
@@ -17,12 +17,12 @@ import com.bms.showroom.model.entity.Collection;
  */
 
 @Repository
-public interface CollectionRepository extends MongoRepository<Collection, String>{
+public interface ShowroomCollectionRepository extends MongoRepository<ShowroomCollection, String>{
 	
-	Collection findByName(String name);
+	ShowroomCollection findByName(String name);
 	
 	@Query("{active:'?true'}")
-	List<Collection> findCollectionsByActive(boolean active);
+	List<ShowroomCollection> findShowroomCollectionsByActive(boolean active);
 	
 	
 	
