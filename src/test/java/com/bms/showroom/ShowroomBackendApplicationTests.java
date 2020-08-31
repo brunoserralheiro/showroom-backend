@@ -3,23 +3,26 @@ package com.bms.showroom;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.ContextConfiguration;
 
+import com.bms.showroom.config.AppConfig;
 import com.bms.showroom.model.data.CollectionRepository;
 import com.bms.showroom.model.data.CustomRepository;
 import com.bms.showroom.model.entity.Collection;
 
 //@DataMongoTest
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = { AppConfig.class })
 @SpringBootTest
 class ShowroomBackendApplicationTests {
 
