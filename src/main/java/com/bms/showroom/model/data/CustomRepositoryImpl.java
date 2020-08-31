@@ -10,26 +10,26 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import com.bms.showroom.model.entity.Collection;
+import com.bms.showroom.model.entity.ShowroomCollection;
 import com.mongodb.client.result.UpdateResult;
 
 
 @Repository
-public class CustomRepositoryImpl implements CustomRepository {
+public class CustomRepositoryImpl implements CustomShowroomRepository {
 
 	@Autowired
 	MongoTemplate mongoTemplate;
 	
 	
 	@Override
-	public long setActiveCollection(String name,  boolean active) {
+	public long setActiveShowroomCollection(String name,  boolean active) {
 		
 		Query query = new Query(Criteria.where("name").is(name)	);
 		Update update = new Update();
 		
 		update.set("active", active);
 		
-		UpdateResult result = mongoTemplate.updateFirst(query, update, Collection.class);
+		UpdateResult result = mongoTemplate.updateFirst(query, update, ShowroomCollection.class);
 		
 		if( result != null)return result.getModifiedCount();
 		
@@ -37,7 +37,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 	}
 
 	@Override
-	public long updateCollection(String name, String description)  {
+	public long updateShowroomCollection(String name, String description)  {
 		
 		Query query = new Query(Criteria.where("name").is(name)	);
 		Update update = new Update();
@@ -46,7 +46,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 			update.set("description", description);
 		}
 		
-		UpdateResult result = mongoTemplate.updateFirst(query, update, Collection.class);
+		UpdateResult result = mongoTemplate.updateFirst(query, update, ShowroomCollection.class);
 		
 		if( result != null)return result.getModifiedCount();
 		
@@ -54,11 +54,11 @@ public class CustomRepositoryImpl implements CustomRepository {
 	}
 
 	@Override
-	public Collection saveCollection(Collection collection) {
+	public ShowroomCollection saveCollection(ShowroomCollection showroomCollection) {
 		
 		
 		
-		return collection;
+		return showroomCollection;
 	}
 	
 

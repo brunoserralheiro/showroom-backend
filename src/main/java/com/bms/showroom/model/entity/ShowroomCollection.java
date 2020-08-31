@@ -3,14 +3,10 @@
  */
 package com.bms.showroom.model.entity;
 
-import javax.persistence.Entity;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.FieldType;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import lombok.Data;
 
@@ -21,8 +17,8 @@ import lombok.Data;
 
 
 @Data
-@Document(collection = "collection")
-public class Collection {
+@Document(collection = "showroom_collection")
+public class ShowroomCollection {
 	
 	
 
@@ -40,7 +36,7 @@ public class Collection {
 	 * @param description
 	 * @param active
 	 */
-	public Collection(String name, String description, boolean active) {
+	public ShowroomCollection(String name, String description, boolean active) {
 		this.name = name;
 		this.description = description;
 		this.active = active;

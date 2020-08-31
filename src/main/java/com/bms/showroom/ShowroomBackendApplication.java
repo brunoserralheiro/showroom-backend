@@ -6,84 +6,128 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.bms.showroom.model.data.CollectionRepository;
-import com.bms.showroom.model.data.CustomRepository;
-import com.bms.showroom.model.entity.Collection;
+import com.bms.showroom.model.data.ShowroomCollectionRepository;
+import com.bms.showroom.model.data.CustomShowroomRepository;
+import com.bms.showroom.model.data.UserRepository;
+import com.bms.showroom.model.entity.ShowroomCollection;
+import com.bms.showroom.model.entity.User;
 
 @ComponentScan("com.bms.showroom")
 @SpringBootApplication
 public class ShowroomBackendApplication {
 
-	
-	
-	private static CollectionRepository collectionRepository;
-	
-	
-	private static CustomRepository customRepository;
-	
-	
-	
-	
+	private static ShowroomCollectionRepository showroomCollectionRepository;
+
+	private static CustomShowroomRepository customShowroomRepository;
+
+	private static UserRepository userRepository;
+
 	/**
 	 * 
 	 */
-	
-@Autowired
-	public ShowroomBackendApplication(@Autowired CollectionRepository collectionRepository, @Autowired CustomRepository customRepository) {
 
-		ShowroomBackendApplication.collectionRepository = collectionRepository;
-		ShowroomBackendApplication.customRepository = customRepository;
-	
+	@Autowired
+	public ShowroomBackendApplication(@Autowired ShowroomCollectionRepository showroomCollectionRepository,
+			@Autowired CustomShowroomRepository customShowroomRepository, @Autowired UserRepository userRepository) {
+
+		ShowroomBackendApplication.showroomCollectionRepository = showroomCollectionRepository;
+		ShowroomBackendApplication.customShowroomRepository = customShowroomRepository;
+		ShowroomBackendApplication.userRepository = userRepository;
+
 	}
-
-
 
 	public static void main(String[] args) {
 		SpringApplication.run(ShowroomBackendApplication.class, args);
 		System.out.println("<<<<<<<<<<<<<<<<           START   >>>>>>>>>>>>");
-//		List <Collection> colls =  addSampleData();
+
+		addData();
+
+
+	}
+
+	
+	private static void addData() {
+
 		
 		
+		List<User> dbUserList = userRepository.findAll();
 		
-		List<Collection> dbList = collectionRepository.findAll();
-		
-		for(Collection col : dbList) {
+		if (dbUserList.isEmpty()) {
+			
+			addUser();
+		}
+		for (User user : dbUserList) {
 			
 			System.out.println("<<<<<<<<<<<<<<<<<");
-			System.out.println(col.getName());
+			System.out.println(user.getFirstName());
 			System.out.println(">>>>>>>>>>>>>>>>>");
 		}
 		
+		
+		
+		
+			List<ShowroomCollection> dbShowroomCollectionList = showroomCollectionRepository.findAll();
+			
+			if (dbShowroomCollectionList.isEmpty()) {
 				
+				List<ShowroomCollection> colls = addShowroomCollections();
+				
+			}
+			for (ShowroomCollection col : dbShowroomCollectionList) {
+				
+				System.out.println("<<<<<<<<<<<<<<<<<");
+				System.out.println(col.getName());
+				System.out.println(">>>>>>>>>>>>>>>>>");
+				
+			}
+			
+		
+		
 	}
 	
-	
-	
-	public static List<Collection> addSampleData() {
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	private static void addUser() {
+
+		User user = new User("bruno", passwordEncoder().encode("password"), "Bruno", "Serralheiro", true, true, true);
+
+		userRepository.save(user);
+	}
+
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	public static List<ShowroomCollection> addShowroomCollections() {
 
 		System.out.println("Adding sample data");
 
-		Collection col1 = new Collection("col1", "desc1", true);
-		Collection col2 = new Collection("col2", "desc2", true);
-		Collection col3 = new Collection("col3", "desc3", true);
-		Collection col4 = new Collection("col4", "desc4", true);
+		ShowroomCollection col1 = new ShowroomCollection("col1", "desc1", true);
+		ShowroomCollection col2 = new ShowroomCollection("col2", "desc2", true);
+		ShowroomCollection col3 = new ShowroomCollection("col3", "desc3", true);
+		ShowroomCollection col4 = new ShowroomCollection("col4", "desc4", true);
 
-		
-		collectionRepository.deleteAll();
-		collectionRepository.save(col1);
-		collectionRepository.save(col2);
-		collectionRepository.save(col3);
-		collectionRepository.save(col4);
+		showroomCollectionRepository.deleteAll();
+		showroomCollectionRepository.save(col1);
+		showroomCollectionRepository.save(col2);
+		showroomCollectionRepository.save(col3);
+		showroomCollectionRepository.save(col4);
 
-		List<Collection> collections = new ArrayList<>();
-		collections.add(col1);
-		collections.add(col2);
-		collections.add(col3);
-		collections.add(col4);
+		List<ShowroomCollection> showroomCollections = new ArrayList<>();
+		showroomCollections.add(col1);
+		showroomCollections.add(col2);
+		showroomCollections.add(col3);
+		showroomCollections.add(col4);
 
-		return collections;
+		return showroomCollections;
 	}
+	
+	@Bean
+	  protected static BCryptPasswordEncoder passwordEncoder() {
+	  
+	  return new BCryptPasswordEncoder(); 
+	  }
 
 }
