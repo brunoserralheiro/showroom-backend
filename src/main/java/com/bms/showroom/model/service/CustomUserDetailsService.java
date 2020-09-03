@@ -3,12 +3,13 @@ package com.bms.showroom.model.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.bms.showroom.model.data.UserRepository;
 import com.bms.showroom.model.entity.User;
 
-
+@Component
 @Service
 public class CustomUserDetailsService implements UserDetailsService{
 

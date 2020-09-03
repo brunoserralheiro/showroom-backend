@@ -76,7 +76,7 @@ public class ShowroomBackendApplication {
 			
 			if (dbShowroomCollectionList.isEmpty()) {
 				
-				List<ShowroomCollection> colls = addShowroomCollections();
+				dbShowroomCollectionList = addShowroomCollections();
 				
 			}
 			for (ShowroomCollection col : dbShowroomCollectionList) {
@@ -94,7 +94,10 @@ public class ShowroomBackendApplication {
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	private static void addUser() {
 
-		User user = new User("bruno", passwordEncoder().encode("password"), "Bruno", "Serralheiro", true, true, true);
+		List <String> roles = new ArrayList<String>();
+		roles.add("ROLE_ADMIN");
+		
+		User user = new User("bruno", passwordEncoder().encode("password"), "Bruno", "Serralheiro",roles,true,true, true, true, true);
 
 		userRepository.save(user);
 	}
