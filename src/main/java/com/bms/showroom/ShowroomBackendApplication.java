@@ -1,8 +1,13 @@
 package com.bms.showroom;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
+import org.jooq.lambda.Unchecked;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,9 +19,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bms.showroom.model.data.ShowroomCollectionRepository;
 import com.bms.showroom.model.data.CustomShowroomRepository;
+import com.bms.showroom.model.data.Exporter;
 import com.bms.showroom.model.data.UserRepository;
 import com.bms.showroom.model.entity.ShowroomCollection;
 import com.bms.showroom.model.entity.User;
+
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 
 @ComponentScan("com.bms.showroom")
 @SpringBootApplication
@@ -58,6 +67,15 @@ public class ShowroomBackendApplication {
 		
 		List<User> dbUserList = userRepository.findAll();
 		
+		Exporter exporter = new Exporter();
+//		UserExporterContentWriter contentWriter = new UserExporterContentWriter();
+		try {
+			exporter.exportFile("userExport.csv", Unchecked.consumer(UserExporterContentWriter::writeContent));
+		} catch (Exception e) {
+			System.err.println("SIFU");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (dbUserList.isEmpty()) {
 			
 			addUser();
@@ -133,4 +151,39 @@ public class ShowroomBackendApplication {
 	  return new BCryptPasswordEncoder(); 
 	  }
 
+	
+	
+	static class UserExporterContentWriter {
+		
+		
+		
+//		Stream<User> s = users.stream();
+		
+		
+		
+		@Transactional(propagation=Propagation.REQUIRES_NEW)
+		@SneakyThrows
+		public static void writeContent(Writer writer) {
+			List<User> users =userRepository.findAll();
+			if(!users.isEmpty()) {
+				for(User u : users)
+				{
+					System.out.println("**************"+u.get_id()+"**************");
+				}
+			}else {
+				System.err.println("**************"+"Sifu!");
+				throw new RuntimeException("No one found");
+			}
+			try {
+				writer.write("ID;Roles \n");
+				
+				
+				users.stream().map(o -> o.get_id() + ";" + o.getRoles().get(0))
+				.forEach(Unchecked.consumer(writer::write));
+			} catch (RuntimeException e) {
+				System.err.println("***************Panic!  "+ e);
+				
+			}
+		}
+	}
 }
