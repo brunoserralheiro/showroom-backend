@@ -39,7 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 //		.maxAgeInSeconds(0)
 //		.includeSubDomains(true);
-//		
+		
+		
 		http
 		.authorizeRequests()
 		.anyRequest()

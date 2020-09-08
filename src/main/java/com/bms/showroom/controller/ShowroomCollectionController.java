@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bms.showroom.model.entity.ShowroomCollection;
 import com.bms.showroom.model.service.ShowroomCollectionService;
 
+@Scope("session")
 @RestController
 public class ShowroomCollectionController {
 
@@ -20,7 +22,7 @@ public class ShowroomCollectionController {
 	private ShowroomCollectionService service;
 	
 	
-	@SuppressWarnings("unchecked")
+	
 	@RequestMapping(  value="api/collection/{name}", method=RequestMethod.GET)
 	public ShowroomCollection getCollection(@RequestParam(value="name", defaultValue = "")String name){
 		
